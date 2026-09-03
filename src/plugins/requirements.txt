@@ -1,0 +1,8 @@
+kicad-python>=0.7.1
+PyGithub
+GitPython
+wxPython~=4.2
+protobuf>=5.26,<6
+python-dotenv
+pyobjc-framework-Cocoa
+pyobjc-framework-ApplicationServices

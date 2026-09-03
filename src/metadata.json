@@ -1,0 +1,40 @@
+{
+  "$schema": "https://go.kicad.org/pcm/schemas/v1",
+  "name": "SFR Tools",
+  "description": "Sheffield Formula Racing",
+  "description_full": "This plugin manages remote syncing with our GitHub organisation for easy cross-collaboration with team members. \n It is required for all Team Members wishing to modify or create KiCAD designs.",
+  "identifier": "com.github.sheffracing.sfr-tools",
+  "type": "plugin",
+  "author": {
+    "name": "Sheffield Formula Racing",
+    "contact": {
+      "github": "https://github.com/sheffracing"
+    }
+  },
+  "maintainer": {
+    "name": "Joseph Morton",
+    "contact": {
+      "github": "https://github.com/onmort"
+    }
+  },
+  "license": "MIT",
+  "resources": {
+    "homepage": "https://www.sheffieldformularacing.co.uk",
+    "Repository": "https://github.com/sheffracing/sfr-tools"
+  },
+  "tags": [
+    "git"
+  ],
+  "versions": [
+    {
+      "version": "1.0.0-alpha",
+      "status": "development",
+      "kicad_version": "9.0",
+      "runtime": "ipc",
+      "platforms": [
+        "macos",
+        "windows"
+      ]
+    }
+  ]
+}
