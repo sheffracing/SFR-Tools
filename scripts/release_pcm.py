@@ -70,6 +70,35 @@ def find_package(slug: str) -> Path:
     return candidates[0]
 
 
+def build_resources_archive(output: Path) -> bool:
+    """Build repository-level icons archive: <package identifier>/icon.png."""
+    icons = []
+    for package_dir in sorted(SRC.iterdir()):
+        metadata_path = package_dir / "metadata.json"
+        icon_path = package_dir / "resources" / "icon.png"
+        if not package_dir.is_dir() or not metadata_path.is_file() or not icon_path.is_file():
+            continue
+        metadata = read_json(metadata_path)
+        identifier = metadata.get("identifier")
+        if not identifier:
+            print(f"Warning: skipping icon without package identifier: {metadata_path}")
+            continue
+        icons.append((icon_path, f"{identifier}/icon.png"))
+
+    if not icons:
+        if output.exists():
+            output.unlink()
+        print("No package icons found; resources.zip will not be published.")
+        return False
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for icon_path, archive_path in icons:
+            archive.write(icon_path, archive_path)
+    print(f"Built repository icon archive with {len(icons)} icon(s): {output}")
+    return True
+
+
 def zip_package(package_dir: Path, output: Path, metadata: dict) -> int:
     """Zip package contents at archive root; strip repository-only download fields."""
     staging = output.parent / "_package_staging"
@@ -217,7 +246,12 @@ def main() -> None:
     )
     write_json(packages_path, packages_doc)
 
-    # repository.json's packages resource hashes the exact bytes written above.
+    # KiCad reads repository-list icons from a separate resources.zip. Each
+    # icon is stored as <package identifier>/icon.png inside that archive.
+    resources_path = ROOT / "resources.zip"
+    has_resources = build_resources_archive(resources_path)
+
+    # repository.json hashes the exact bytes of each published resource.
     packages_bytes = packages_path.read_bytes()
     timestamp = int(time.time())
     now_utc = datetime.fromtimestamp(timestamp, timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
@@ -237,6 +271,13 @@ def main() -> None:
             "update_time_utc": now_utc,
         },
     }
+    if has_resources:
+        repository_doc["resources"] = {
+            "url": f"https://raw.githubusercontent.com/{args.repository}/{args.default_branch}/resources.zip",
+            "sha256": sha256_file(resources_path),
+            "update_timestamp": timestamp,
+            "update_time_utc": now_utc,
+        }
     write_json(repository_path, repository_doc)
 
     print(f"Package folder: {package_dir.relative_to(ROOT)}")
@@ -244,7 +285,7 @@ def main() -> None:
     print(f"Version: {version}")
     print(f"Archive: {archive_path}")
     print(f"Download URL: {release_url}")
-    print("Updated: metadata.json, packages.json, repository.json")
+    print("Updated: metadata.json, packages.json, repository.json, resources.zip")
 
 
 if __name__ == "__main__":

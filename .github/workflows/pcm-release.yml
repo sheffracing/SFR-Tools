@@ -83,7 +83,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src repository.json packages.json
+          git add src repository.json packages.json resources.zip
           if git diff --cached --quiet; then
             echo "No metadata changes to commit."
             exit 0
