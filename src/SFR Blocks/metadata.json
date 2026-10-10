@@ -1,0 +1,41 @@
+{
+  "$schema": "https://go.kicad.org/pcm/schemas/v1",
+  "name": "SFR Blocks",
+  "description": "Sheffield Formula Racing",
+  "description_full": "This Library contains all our standard Reference Designs. \n It is required for all Team Members wishing to create KiCAD designs.",
+  "identifier": "com.github.sheffracing.sfr-blocks",
+  "type": "library",
+  "author": {
+    "name": "Sheffield Formula Racing",
+    "contact": {
+      "github": "https://github.com/sheffracing"
+    }
+  },
+  "maintainer": {
+    "name": "Joseph Morton",
+    "contact": {
+      "github": "https://github.com/onmort"
+    }
+  },
+  "license": "MIT",
+  "resources": {
+    "homepage": "https://www.sheffieldformularacing.co.uk",
+    "Repository": "https://github.com/sheffracing/sfr-tools"
+  },
+  "tags": [
+    "design blocks",
+    "reference design"
+  ],
+  "versions": [
+    {
+      "version": "1.0.0-alpha",
+      "status": "development",
+      "kicad_version": "10.0",
+
+      "platforms": [
+        "macos",
+        "windows"
+      ]
+    }
+  ]
+}

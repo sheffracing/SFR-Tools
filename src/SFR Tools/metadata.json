@@ -29,11 +29,10 @@
     {
       "version": "1.0.0-alpha",
       "status": "development",
-      "kicad_version": "9.0",
+      "kicad_version": "10.0",
       "runtime": "ipc",
       "platforms": [
-        "macos",
-        "windows"
+        "macos"
       ]
     }
   ]

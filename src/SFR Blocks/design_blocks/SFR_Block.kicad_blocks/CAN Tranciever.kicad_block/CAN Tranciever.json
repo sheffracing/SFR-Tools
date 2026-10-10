@@ -1,0 +1,5 @@
+{
+"description": "Standard CAN Tranciever. All boards requiring a CAN Bus connection must use this circuit.",
+"keywords": "can",
+"fields": {}
+}

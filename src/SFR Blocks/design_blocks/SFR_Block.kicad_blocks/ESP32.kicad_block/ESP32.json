@@ -1,0 +1,5 @@
+{
+"description": "Standard ESP32 symbol. Do NOT change any of the assigned pins on this shcematic. Refer to documentation for Pin assignment.",
+"keywords": "esp; mc; microcontroller",
+"fields": {}
+}

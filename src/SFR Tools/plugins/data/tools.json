@@ -1,0 +1,40 @@
+{
+    "Menu": {
+        "save": {
+            "icon": "save.png",
+            "tooltip": "Save this PCB",
+            "package": "save",
+            "enabled": true
+        },
+        "download": {
+            "icon": "download.png",
+            "tooltip": "Download a PCB",
+            "package": "download",
+            "enabled": true
+        },
+        "review": {
+            "icon": "review.png",
+            "tooltip": "Request Review & Merge",
+            "package": "pullrequest",
+            "enabled": true
+        },
+        "component": {
+            "icon": "chip.png",
+            "tooltip": "Add a Symbol or Footprint",
+            "package": "component",
+            "enabled": false
+        },
+        "help": {
+            "icon": "help.png",
+            "tooltip": "Get Help",
+            "package": "help",
+            "enabled": true
+        },
+        "settings": {
+            "icon": "settings.png",
+            "tooltip": "Settings",
+            "package": "settings",
+            "enabled": false
+        }
+    }
+}

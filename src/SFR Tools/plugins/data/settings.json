@@ -1,0 +1,21 @@
+{
+    "github": {
+        "local_repo_path": "",
+        "login": "onmort"
+    },
+    "debug": {
+        "remote_logging": true,
+        "remote_url": {
+            "Info": "http://127.0.0.1:7084/data",
+            "Error": "http://127.0.0.1:7084/error"
+        },
+        "local_logging": false,
+        "log_file": "log.txt"
+    },
+    "info": {
+        "car": "SFR18",
+        "autosave": {
+            "interval": 1
+        }
+    }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://go.kicad.org/api/schemas/v1",
+  "identifier": "com.github.sheffracing.SFR-Tools",
+  "name": "Sheffield Formula Racing",
+  "description": "Manage KiCad PCBs hosted on the SFR GitHub Organisation",
+  "runtime": {
+    "type": "python",
+    "min_version": "3.9"
+  },
+  "actions": [
+    {
+      "identifier": "sfr",
+      "name": "SFR Tools",
+      "description": "Sheffield Formula Racing",
+      "show-button": true,
+      "scopes": [
+        "pcb"
+      ],
+      "entrypoint": "action.py",
+      "icons-light": [
+        "icons/tools.png"
+      ],
+      "icons-dark": [
+        "icons/tools.png"
+      ]
+    },
+    {
+      "identifier": "sfr-qs",
+      "name": "SFR Tools - Quick Save",
+      "description": "Sheffield Formula Racing",
+      "show-button": true,
+      "scopes": [
+        "pcb"
+      ],
+      "entrypoint": "action2.py",
+      "icons-light": [
+        "icons/quick_save.png"
+      ],
+      "icons-dark": [
+        "icons/quick_save.png"
+      ]
+    }
+  ]
+}

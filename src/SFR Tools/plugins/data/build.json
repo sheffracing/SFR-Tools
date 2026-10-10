@@ -1,0 +1,40 @@
+{
+    "name": "SFR Tools",
+    "identifier": "com.github.sheffracing.SFR-Tools",
+    "github": {
+        "bot_name": "SFR KiCAD Extension",
+        "slug": "sfr-kicad-extension",
+        "token_url": "https://sfr-iat-api-916184414017.europe-west2.run.app/github/auth",
+        "client_id": "Iv23lia1SmAzrRVmqc48",
+        "repo": "sheffracing/Kicad",
+        "org": "sheffracing",
+        "teams": {
+            "reviewer": "electronics-lead"
+        },
+        "users": {
+            "reviewer": [
+
+            ]
+        },
+        "labels": {
+            "pcb": "PCB",
+            "review": "Board Review"
+        },
+        "milestones": {
+            "order": 1,
+            "comp": 2
+        },
+        "car_path": "Boards"
+    },
+    "car": {
+        "cars": [
+            "SFR18",
+            "SFR19",
+            "SFR20",
+            "SFR21"
+        ],
+        "prefix": "SFR"
+    },
+    "version": "1.0.0-alpha",
+    "help_url": "https://example.com"
+}
