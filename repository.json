@@ -1,0 +1,17 @@
+{
+  "$schema": "https://go.kicad.org/pcm/schemas/v2#/definitions/Repository",
+  "name": "Sheffield Formula Racing KiCad Add-ons",
+  "maintainer": {
+    "name": "Sheffield Formula Racing",
+    "contact": {
+      "web": "https://github.com/sheffracing"
+    }
+  },
+  "schema_version": 2,
+  "packages": {
+    "url": "https://raw.githubusercontent.com/sheffracing/SFR-Tools/main/packages.json",
+    "sha256": "0bfc052875d1973f4d24c7756295b67f0a51c5344eaf2511ab1aa534f3b616f5",
+    "update_timestamp": 1791637206,
+    "update_time_utc": "2026-10-10 13:00:06"
+  }
+}
