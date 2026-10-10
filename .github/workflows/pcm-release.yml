@@ -1,0 +1,86 @@
+name: KiCad PCM package release
+
+on:
+  push:
+    tags:
+      - "*/v[0-9]*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Package release tag, e.g. sfr-tools/v1.2.0"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pcm-release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine release tag
+        id: release
+        shell: bash
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            tag="${{ inputs.tag }}"
+          else
+            tag="${GITHUB_REF_NAME}"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      # The tagged commit is the exact source that is packaged.
+      - name: Check out tagged source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release.outputs.tag }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build PCM package and update indexes
+        id: build
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          REPOSITORY: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          python scripts/release_pcm.py \
+            --tag "$RELEASE_TAG" \
+            --repository "$REPOSITORY" \
+            --default-branch "$DEFAULT_BRANCH" \
+            --output-dir dist
+
+      - name: Create GitHub Release and upload package ZIP
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          gh release create "$RELEASE_TAG" dist/*.zip \
+            --title "$RELEASE_TAG" \
+            --generate-notes
+
+      # The release metadata and source metadata are committed to the default
+      # branch. This expects the tag to be based on the current default branch.
+      - name: Commit updated PCM metadata
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src repository.json packages.json
+          if git diff --cached --quiet; then
+            echo "No metadata changes to commit."
+            exit 0
+          fi
+          git commit -m "Publish PCM package ${RELEASE_TAG}"
+          git push origin "HEAD:${DEFAULT_BRANCH}"
