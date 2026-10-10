@@ -11,8 +11,8 @@
   "packages": {
     "url": "https://raw.githubusercontent.com/sheffracing/SFR-Tools/main/packages.json",
     "sha256": "b736984769446db5fb370701fe80f621438ae043f4ddb12f045fe16f5afaef2a",
-    "update_timestamp": 1791641478,
-    "update_time_utc": "2026-10-10 14:11:18"
+    "update_timestamp": 1791641735,
+    "update_time_utc": "2026-10-10 14:15:35"
   },
   "resources": {
     "url": "https://raw.githubusercontent.com/sheffracing/SFR-Tools/main/resources.zip",
