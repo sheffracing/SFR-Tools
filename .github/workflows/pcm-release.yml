@@ -63,10 +63,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          PRERELEASE: ${{ steps.build.outputs.prerelease }}
         run: |
+          args=()
+          if [[ "$PRERELEASE" == "true" ]]; then
+            args+=(--prerelease)
+          fi
           gh release create "$RELEASE_TAG" dist/*.zip \
             --title "$RELEASE_TAG" \
-            --generate-notes
+            --generate-notes \
+            "${args[@]}"
 
       # The release metadata and source metadata are committed to the default
       # branch. This expects the tag to be based on the current default branch.

@@ -138,6 +138,24 @@ def main() -> None:
     template["version"] = version
     template.setdefault("status", "stable")
     template.setdefault("kicad_version", "10.0")
+
+    # GitHub marks testing/development builds as prereleases. A deprecated
+    # release is not automatically a prerelease: that status describes support
+    # state, not release maturity.
+    status = str(template["status"]).strip().casefold()
+    if status not in {"stable", "testing", "development", "deprecated"}:
+        raise SystemExit(
+            f"Unsupported metadata status '{template['status']}'. Expected "
+            "stable, testing, development, or deprecated."
+        )
+    prerelease = status in {"testing", "development"}
+    import os
+    github_output = os.environ.get("GITHUB_OUTPUT")
+    if github_output:
+        with open(github_output, "a", encoding="utf-8") as output:
+            output.write(f"prerelease={'true' if prerelease else 'false'}\n")
+    print(f"Metadata status: {status}; GitHub prerelease: {prerelease}")
+
     # Keep only the newly released version inside the installable archive.
     source_metadata["versions"] = [template]
     write_json(metadata_path, source_metadata)
