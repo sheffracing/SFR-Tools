@@ -10,8 +10,8 @@
   "schema_version": 2,
   "packages": {
     "url": "https://raw.githubusercontent.com/sheffracing/SFR-Tools/main/packages.json",
-    "sha256": "20724d2d6e266a1919b79b7ad27edd2a53cc2a5a330e16b673f5d196a7ee19e4",
-    "update_timestamp": 1791640623,
-    "update_time_utc": "2026-10-10 13:57:03"
+    "sha256": "e5a245fe4036932deb77b7f6d6ee606a33cd759fe151b67d5e93876f9d8aa8ba",
+    "update_timestamp": 1791641680,
+    "update_time_utc": "2026-10-10 14:14:40"
   }
 }
