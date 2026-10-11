@@ -11,3 +11,4 @@ pyobjc-framework-Cocoa
 cryptography
 bcrypt
 requests
+pywinauto

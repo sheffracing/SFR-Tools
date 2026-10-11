@@ -23,22 +23,6 @@
       "icons-dark": [
         "icons/tools.png"
       ]
-    },
-    {
-      "identifier": "sfr-qs",
-      "name": "SFR Tools - Quick Save",
-      "description": "Sheffield Formula Racing",
-      "show-button": true,
-      "scopes": [
-        "pcb"
-      ],
-      "entrypoint": "action2.py",
-      "icons-light": [
-        "icons/quick_save.png"
-      ],
-      "icons-dark": [
-        "icons/quick_save.png"
-      ]
     }
   ]
 }

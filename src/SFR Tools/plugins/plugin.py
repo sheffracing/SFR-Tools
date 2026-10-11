@@ -80,15 +80,23 @@ class Plugin(KiCad):
         payload = [self.binary]
         if path:
             payload.append(path)
-        subprocess.Popen([self.binary])
+        subprocess.Popen(payload)
 
     def __quitWin(self, force: bool = False):
         if sys.platform != "win32":
             return
         if force:
-            pass
+            subprocess.run(
+                ["taskkill", "/F", "/IM", executable],
+                capture_output=True,
+                text=True,
+            )
         else:
-            subprocess.run(["taskkill", "/IM", self.binary])
+            subprocess.run(
+                ["taskkill", "/IM", self.binary],
+                capture_output=True,
+                text=True,
+            )
     def quit(self, force: bool = False):
         self.__quitMac(force)
         self.__quitWin(force)
