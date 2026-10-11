@@ -143,7 +143,7 @@ sfr-tools/vX.Y.Z
 ```
 
 Replace `X.Y.Z` with the intended release version.
-
+For more information, see [RELEASE.md](https://github.com/sheffracing/SFR-Tools/blob/main/RELEASE.md)
 
 ## License
 
