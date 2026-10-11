@@ -32,7 +32,8 @@
       "kicad_version": "10.0",
       "runtime": "ipc",
       "platforms": [
-        "macos"
+        "macos",
+        "windows"
       ]
     }
   ]
