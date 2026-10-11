@@ -30,6 +30,19 @@
       ],
       "versions": [
         {
+          "version": "0.0.3",
+          "status": "development",
+          "kicad_version": "10.0",
+          "runtime": "ipc",
+          "platforms": [
+            "macos"
+          ],
+          "download_url": "https://github.com/sheffracing/SFR-Tools/releases/download/sfr-tools/v0.0.3/com.github.sheffracing.sfr-tools_0.0.3_pcm.zip",
+          "download_sha256": "9e32fd33fdb4890c59000aed026b20f10e0066df8084f2e1a330615dfd57cefc",
+          "download_size": 532637,
+          "install_size": 673259
+        },
+        {
           "version": "0.0.2",
           "status": "development",
           "kicad_version": "10.0",

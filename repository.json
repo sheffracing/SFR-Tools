@@ -10,14 +10,14 @@
   "schema_version": 2,
   "packages": {
     "url": "https://raw.githubusercontent.com/sheffracing/SFR-Tools/main/packages.json",
-    "sha256": "b736984769446db5fb370701fe80f621438ae043f4ddb12f045fe16f5afaef2a",
-    "update_timestamp": 1791641735,
-    "update_time_utc": "2026-10-10 14:15:35"
+    "sha256": "72abce45e810c7841c569b66b62b0ebb1774a0b1f10abdb61f46c831155af9d9",
+    "update_timestamp": 1791720452,
+    "update_time_utc": "2026-10-11 12:07:32"
   },
   "resources": {
     "url": "https://raw.githubusercontent.com/sheffracing/SFR-Tools/main/resources.zip",
-    "sha256": "a0d33eb0b5db402816c8286164d7cb7a778616c51faaa973f08490986f237dd2",
-    "update_timestamp": 1791641478,
-    "update_time_utc": "2026-10-10 14:11:18"
+    "sha256": "6c63c010658b78fd27653949ceafd11365fda5fc84c26ca6e494f9252b38da73",
+    "update_timestamp": 1791720452,
+    "update_time_utc": "2026-10-11 12:07:32"
   }
 }
