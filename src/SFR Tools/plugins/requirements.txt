@@ -6,9 +6,9 @@ protobuf>=5.26,<6
 python-dotenv
 PyGithub
 GitPython
-pyobjc-framework-ApplicationServices
-pyobjc-framework-Cocoa
+pyobjc-framework-ApplicationServices ; sys_platform == "darwin"
+pyobjc-framework-Cocoa ; sys_platform == "darwin"
 cryptography
 bcrypt
 requests
-pywinauto
+pywinauto ; sys_platform == "win32"
