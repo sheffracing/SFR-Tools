@@ -5,11 +5,8 @@
     },
     "debug": {
         "remote_logging": true,
-        "remote_url": {
-            "Info": "http://127.0.0.1:7084/data",
-            "Error": "http://127.0.0.1:7084/error"
-        },
-        "local_logging": false,
+        "remote_url": "http://127.0.0.1:7084/log",
+        "local_logging": true,
         "log_file": "log.txt"
     },
     "info": {

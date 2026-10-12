@@ -10,7 +10,7 @@ from plugin import Plugin
 from utils import build, settings, misc
 from utils.git import Git, NoChanges
 from utils.log import log
-import utils.platform.darwin as darwin
+from utils.platform import darwin, win32
 
 env_path = Path(__file__).parents[1] / ".env"
 
@@ -21,8 +21,9 @@ def __pull(self, event):
     github: Git = self.parent.git
     plugin: Plugin = self.parent.plugin
     
-    response = darwin.modal("This might overwrite data", "Are you sure you want to overwrite this board? This action cannot be undone.", ("Go Back", "Overwrite"))
-    if response == 0:
+    response_darwin = darwin.modal("This might overwrite data", "Are you sure you want to overwrite this board? This action cannot be undone.", ("Go Back", "Overwrite"))
+    response_win32 = win32.modal("This might overwrite data", "Are you sure you want to overwrite this board? This action cannot be undone.", ("No", "Yes"))
+    if (response_darwin or response_win32) == 0:
          return
     else:
         board = Path(build.get("github/car_path")) / settings.get("info/car") / self.current_board
@@ -31,7 +32,7 @@ def __pull(self, event):
         try:
             wx.BeginBusyCursor()
             if board_open:
-                 darwin.save()
+                 plugin.Save()
                  plugin.quit(True)
             github.prune_deleted_branches()
             branches = github.find_branches_for_directory(board)

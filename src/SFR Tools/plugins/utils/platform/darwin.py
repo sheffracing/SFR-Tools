@@ -11,41 +11,7 @@ import requests
 import subprocess
 import time
 from pathlib import Path
-from AppKit import (
-    NSAlert,
-    NSAlertStyleInformational,
-    NSCriticalAlertStyle,
-    NSApp,
-    NSImage,
-    NSApplicationActivationPolicyRegular,
-    NSModalResponseOK,
-    NSScreen,
-    NSAlertFirstButtonReturn,
-    NSAlertSecondButtonReturn,
-    NSAlertThirdButtonReturn,
-    NSWorkspace,
-    NSApplication
-)
 
-from ApplicationServices import (
-    AXUIElementCreateApplication,
-    AXUIElementCopyAttributeValue,
-    AXUIElementSetAttributeValue,
-    AXUIElementPerformAction,
-
-    kAXWindowsAttribute,
-    kAXTitleAttribute,
-    kAXFocusedAttribute,
-    kAXMainAttribute,
-    kAXMenuBarAttribute,
-    kAXChildrenAttribute,
-    kAXPressAction,
-    kAXEnabledAttribute,
-    kAXFrontmostAttribute,
-    kAXErrorSuccess,
-    AXUIElementCopyAttributeNames
-)
-import Quartz
 #from utils.log import log
 
 SYSTEM = "darwin"
@@ -55,6 +21,44 @@ def entrypoint(func):
         if sys.platform == SYSTEM:
              return func(*args,**kwargs)
     return wrapper
+
+if sys.platform == SYSTEM:
+    from AppKit import (
+        NSAlert,
+        NSAlertStyleInformational,
+        NSCriticalAlertStyle,
+        NSApp,
+        NSImage,
+        NSApplicationActivationPolicyRegular,
+        NSModalResponseOK,
+        NSScreen,
+        NSAlertFirstButtonReturn,
+        NSAlertSecondButtonReturn,
+        NSAlertThirdButtonReturn,
+        NSWorkspace,
+        NSApplication
+    )
+
+    from ApplicationServices import (
+        AXUIElementCreateApplication,
+        AXUIElementCopyAttributeValue,
+        AXUIElementSetAttributeValue,
+        AXUIElementPerformAction,
+
+        kAXWindowsAttribute,
+        kAXTitleAttribute,
+        kAXFocusedAttribute,
+        kAXMainAttribute,
+        kAXMenuBarAttribute,
+        kAXChildrenAttribute,
+        kAXPressAction,
+        kAXEnabledAttribute,
+        kAXFrontmostAttribute,
+        kAXErrorSuccess,
+        AXUIElementCopyAttributeNames
+    )
+    import Quartz
+
 
 def _objc_runtime():
     import ctypes

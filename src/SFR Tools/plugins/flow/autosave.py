@@ -11,7 +11,7 @@ from plugin import Plugin
 from utils import settings
 from utils.git import Git, NoChanges
 from utils.log import log
-from utils.platform import darwin
+from utils.platform import darwin, win32 as win
 
 env_path = Path(__file__).parents[1] / ".env"
 
@@ -27,7 +27,7 @@ def worker(interval: int, func):
 
 def run(github: Git, plugin: Plugin):
     try:
-        darwin.save()
+        plugin.Save()
         time.sleep(0.1)
         github.commit_branch(Path(plugin.project.path), plugin.branch_name, "Autosave", f"This action was performed automatically by SFR Tools.")
     except NoChanges:

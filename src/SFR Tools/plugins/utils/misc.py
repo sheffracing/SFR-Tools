@@ -52,12 +52,3 @@ def lite(func):
         except:
             log(traceback.format_exc())
     return wrapper
-
-
-"/Users/joseph/Documents/KiCad/10.0/3rdparty/plugins/com_github_sheffracing_SFR-Tools"
-
-mv "/Users/joseph/Documents/KiCad/10.0/3rdparty/plugins/com_github_sheffracing_SFR-Tools" \
-   "/Users/joseph/Documents/KiCad/10.0/3rdparty/plugins/com_github_sheffracing_SFR-Tools-backup"
-
-ln -s "/Users/joseph/Documents/GitHub/SFR Tools/src/SFR Tools/plugins" \
-      "/Users/joseph/Documents/KiCad/10.0/3rdparty/plugins/com_github_sheffracing_SFR-Tools"

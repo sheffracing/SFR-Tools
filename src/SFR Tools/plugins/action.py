@@ -1,56 +1,32 @@
 import requests
-
-requests.get(url="http://127.0.0.1:7084/")
-
-requests.post(url="http://127.0.0.1:7084/data?data=hello")
-
-requests.post(
-    url="http://127.0.0.1:7084/data",
-    params={
-        "data": "hello"
-    }
-)
-
-try:
-    import traceback
-    from UX.info import InfoDialog
-    import requests
-    from pathlib import Path
-    from dotenv import load_dotenv, set_key
-    from urllib.parse import parse_qs
-    import json
-    from flow import menu, login, autosave
-    from plugin import Plugin
-    from utils.git import Git, find_github_repo, check_user_credentials
-    from utils import settings, build, misc
-    from github import Auth
-    import utils.platform.darwin as darwin
-    import os
-    from utils.log import log
-    import wx
-    import time
-    import threading
-    from concurrent.futures import ThreadPoolExecutor
-
-    env_path = Path(__file__).parent / ".env"
-    kicad_path = Path(__file__).parents[4]
-
-    if not env_path.exists():
-        with open(".env","x") as env:
-            pass
-    if not kicad_path.is_dir() or kicad_path.name != "KiCad":
+import traceback
+from UX.info import InfoDialog
+import requests
+from pathlib import Path
+from dotenv import load_dotenv, set_key
+from urllib.parse import parse_qs
+import json
+from flow import menu, login, autosave
+from plugin import Plugin
+from utils.git import Git, find_github_repo, check_user_credentials
+from utils import settings, build, misc
+from github import Auth
+import utils.platform.darwin as darwin
+import os
+from utils.log import log
+import wx
+import time
+import threading
+from concurrent.futures import ThreadPoolExecutor
+env_path = Path(__file__).parent / ".env"
+kicad_path = Path(__file__).parents[4]
+if not env_path.exists():
+    with open(".env","x") as env:
         pass
-
-    load_dotenv(env_path)
-
-    loadUI = InfoDialog(None, "Loading Plugin...", "Initialising (1/5)", "Loading", [])
-except Exception as e:
-    requests.post(
-        "http://127.0.0.1:7084/data",
-        params={
-            "data": str(e)
-        }
-    )
+if not kicad_path.is_dir() or kicad_path.name != "KiCad":
+    pass
+load_dotenv(env_path)
+loadUI = InfoDialog(None, "Loading Plugin...", "Initialising (1/5)", "Loading", [])
 
 @misc.handle
 def finish_initialization(git, app, repo):

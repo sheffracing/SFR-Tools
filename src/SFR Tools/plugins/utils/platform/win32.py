@@ -7,7 +7,6 @@ from pathlib import Path
 
 import ctypes
 from ctypes import wintypes
-from pywinauto import Desktop
 
 
 SYSTEM = Path(__file__).name.removesuffix(Path(__file__).suffix)
@@ -18,13 +17,21 @@ def entrypoint(func):
              return func(*args,**kwargs)
     return wrapper
 
-@entrypoint
-def prepare_app(*args):
-    pass
+if sys.platform == SYSTEM:
+    from pywinauto import Desktop
 
 @entrypoint
-def attach_app(*args):
-    pass
+def prepare_app():
+    try:
+        return ctypes.windll.user32.GetForegroundWindow()
+    except Exception:
+        return None
+
+@entrypoint
+def attach_app(window, foreground_hwnd, board):
+    kicad_hwnd = __resolve_kicad_hwnd(foreground_hwnd, board)
+    if not __own_to_hwnd(window, kicad_hwnd):
+        __make_tool_window(window)
 
 def __press_tools_item(window, names):
     """Find and invoke an enabled Tools menu item."""
@@ -35,7 +42,93 @@ def __press_tools_item(window, names):
             window.menu_select(f"Tools->{n}")
             return True
     except Exception as e:
-        print(f"Menu selection failed: {e}")
+        print(f"Menu selection failed: {e}")    
+
+def __resolve_kicad_hwnd(foreground_hwnd, board):
+    """Find the KiCad PCB editor's top-level window to own our dialog to."""
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        user32 = ctypes.windll.user32
+
+        def title(hwnd):
+            length = user32.GetWindowTextLengthW(hwnd)
+            buf = ctypes.create_unicode_buffer(length + 1)
+            user32.GetWindowTextW(hwnd, buf, length + 1)
+            return buf.value
+
+        try:
+            base = os.path.splitext(os.path.basename(board.name))[0]
+        except Exception:
+            base = ""
+
+        # The foreground window is usually the editor; trust it if it looks right.
+        if foreground_hwnd:
+            t = title(foreground_hwnd)
+            if t and ("PCB Editor" in t or (base and base in t)):
+                return foreground_hwnd
+
+        matches = []
+        proto = ctypes.WINFUNCTYPE(ctypes.c_bool, wintypes.HWND, wintypes.LPARAM)
+
+        def callback(hwnd, _):
+            if user32.IsWindowVisible(hwnd):
+                t = title(hwnd)
+                if t and ("PCB Editor" in t or (base and base in t)):
+                    matches.append(hwnd)
+            return True
+
+        user32.EnumWindows(proto(callback), 0)
+        if foreground_hwnd in matches:
+            return foreground_hwnd
+        if matches:
+            return matches[0]
+        return foreground_hwnd or None
+    except Exception:
+        return None
+
+
+def __own_to_hwnd(window, owner_hwnd):
+    """Make `window` an owned window of `owner_hwnd` (which may live in another
+    process). Owned windows get no taskbar button and follow their owner.
+    Returns True on success."""
+    if not owner_hwnd:
+        return False
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        GWLP_HWNDPARENT = -8
+        user32 = ctypes.windll.user32
+        set_owner = getattr(user32, "SetWindowLongPtrW", user32.SetWindowLongW)
+        set_owner.argtypes = [wintypes.HWND, ctypes.c_int, ctypes.c_void_p]
+        set_owner.restype = ctypes.c_void_p
+        set_owner(window.GetHandle(), GWLP_HWNDPARENT, owner_hwnd)
+        return True
+    except Exception:
+        return False
+
+
+def __make_tool_window(window):
+    """Fallback when the KiCad window can't be found: at least keep the dialog
+    out of the taskbar by marking it a tool window."""
+    if sys.platform != "win32":
+        return
+    try:
+        import ctypes
+
+        GWL_EXSTYLE = -20
+        WS_EX_TOOLWINDOW = 0x00000080
+        WS_EX_APPWINDOW = 0x00040000
+        user32 = ctypes.windll.user32
+        hwnd = window.GetHandle()
+        ex = user32.GetWindowLongW(hwnd, GWL_EXSTYLE)
+        user32.SetWindowLongW(
+            hwnd, GWL_EXSTYLE, (ex | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW
+        )
+    except Exception:
+        pass
 
 @entrypoint
 def modal(title, message, buttons=None, icon="info"):

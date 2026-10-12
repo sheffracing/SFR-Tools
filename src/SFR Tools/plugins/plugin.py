@@ -51,6 +51,7 @@ class Plugin(KiCad):
         self.board.save()
         #self.schematic.save()
         darwin.save()
+        win.save()
 
     def __launchMac(self, path: str = None):
         if sys.platform != "darwin":
@@ -105,8 +106,8 @@ class Plugin(KiCad):
         self.__launchMac(str(path) if path else None)
         self.__launchWin(str(path) if path else None)
         time.sleep(0.5)
-        log("opening subworkers")
         darwin.open(eeschema, pcbnew)
+        win.open(eeschema, pcbnew)
     def is_file_symbol(path: Path) -> tuple[bool, str]:
         if not path or path.suffix != ".kicad_sym":
             return False, "File is nil or has incorrect suffix"

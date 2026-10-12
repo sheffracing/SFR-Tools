@@ -19,7 +19,7 @@ def __success(self, summary: str, description: str):
     github: Git = self.parent.git
     plugin: Plugin = self.parent.plugin
     try:
-        darwin.save()
+        plugin.Save()
         github.commit_branch(Path(plugin.project.path), plugin.branch_name, summary, description)
         #github.push_branch(plugin.branch_name)
         self.EndModal(wx.ID_CLOSE)
